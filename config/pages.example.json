@@ -1,0 +1,20 @@
+{
+  "/": {
+    "renderMode": "static",
+    "title": "Judul situs Anda dengan fokus editorial yang jelas",
+    "description": "Tulis deskripsi nyata tentang manfaat unik situs Anda bagi pembaca.",
+    "heading": "Catatan dari redaksi",
+    "intro": "Ganti contoh ini dengan pengantar asli Anda sendiri.",
+    "paragraphs": [
+      "Tambahkan ulasan hasil pengujian, perbandingan, panduan, atau data asli yang relevan dengan halaman ini.",
+      "Penambahan judul atau beberapa kalimat saja tidak menjamin Google menganggap isi halaman berbeda."
+    ]
+  },
+  "/products/example-product": {
+    "renderMode": "static",
+    "title": "Ulasan produk berdasarkan pengujian Anda",
+    "description": "Ringkasan ulasan asli Anda.",
+    "heading": "Hasil pengujian kami",
+    "intro": "Isi dengan fakta yang sudah Anda verifikasi."
+  }
+}

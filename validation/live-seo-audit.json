@@ -1,0 +1,55 @@
+{
+  "origin": "http://127.0.0.1:3211",
+  "checkedAt": "2026-10-23T17:16:55.944Z",
+  "sitemaps": [
+    {
+      "url": "http://127.0.0.1:3211/sitemap.xml",
+      "kind": "urlset",
+      "entries": 568
+    }
+  ],
+  "pages": [
+    {
+      "url": "http://127.0.0.1:3211/",
+      "status": 200,
+      "canonical": "http://127.0.0.1:3211/",
+      "title": "CodeHype - Launch, Discover & Grow SaaS Products"
+    },
+    {
+      "url": "http://127.0.0.1:3211/explore",
+      "status": 200,
+      "canonical": "http://127.0.0.1:3211/explore",
+      "title": "Explore AI Products · CodeHype"
+    },
+    {
+      "url": "http://127.0.0.1:3211/launches/w43",
+      "status": 200,
+      "canonical": "http://127.0.0.1:3211/launches/w43",
+      "title": "Week 43 AI Product Launches | CodeHype"
+    },
+    {
+      "url": "http://127.0.0.1:3211/winners",
+      "status": 200,
+      "canonical": "http://127.0.0.1:3211/winners",
+      "title": "AI Winners & Leaderboards · CodeHype"
+    },
+    {
+      "url": "http://127.0.0.1:3211/categories",
+      "status": 200,
+      "canonical": "http://127.0.0.1:3211/categories",
+      "title": "AI Product Categories · CodeHype"
+    }
+  ],
+  "issues": [],
+  "warnings": [
+    {
+      "url": "http://127.0.0.1:3211",
+      "message": "Only 5 of 568 sitemap pages checked; increase --limit for a full audit"
+    }
+  ],
+  "pageLimit": 5,
+  "mapLimit": 100,
+  "totalSitemapPages": 568,
+  "passed": true,
+  "scope": "HTTP, canonical, sitemap, robots and basic JSON-LD checks. Not a Google eligibility validator; no browser hydration or Google indexing check."
+}

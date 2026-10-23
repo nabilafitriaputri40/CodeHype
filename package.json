@@ -1,0 +1,16 @@
+{
+  "name": "portable-seo-mirror",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Configurable reverse proxy with canonical, sitemap and JSON-LD rewriting",
+  "type": "module",
+  "engines": { "node": ">=24 <27" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.mjs",
+    "dev": "node --watch --env-file-if-exists=.env src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "audit:seo": "node --env-file-if-exists=.env scripts/audit-seo.mjs",
+    "audit:source": "node --env-file-if-exists=.env scripts/audit-source.mjs"
+  },
+  "dependencies": { "cheerio": "1.2.0", "fast-xml-parser": "5.11.2" }
+}

@@ -1,0 +1,5 @@
+# Replace your-domain.example and put this in /etc/caddy/Caddyfile.
+your-domain.example {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:3000
+}
