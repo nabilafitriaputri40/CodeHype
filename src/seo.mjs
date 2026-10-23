@@ -66,17 +66,22 @@ export function transformHtml(html, requestUrl, status, c) {
   const sourceNoindex = $('meta[name]').toArray().some(el => /^(robots|googlebot)$/i.test($(el).attr('name')) && /\b(noindex|none)\b/i.test($(el).attr('content') || ''));
   const noindex = !c.enableIndexing || status !== 200 || sourceNoindex || pathIsNoindex(requestUrl.pathname, c);
   const stats = { invalidJsonLdRemoved: 0, breadcrumbsRemoved: 0, breadcrumbsRepaired: 0 };
-  // Resolve all internal HTML resource/navigation URLs against the upstream document.
+  // Only absolute upstream URLs are remapped; relative ones already resolve on the mirror and must stay
+  // byte-identical (Turbopack matches chunk <script src> attributes against its manifest to boot React).
   const attrs = ['href','src','action','poster','data-src','itemid','cite','formaction','data-href'];
+  const isAbsolute = v => /^\s*(?:[a-z][a-z\d+.-]*:|\/\/|\\\\)/i.test(v);
   $('*').each((_, el) => {
     const x = $(el);
-    for (const attr of attrs) if (x.attr(attr) !== undefined) x.attr(attr, rewriteUrl(x.attr(attr), base, c));
+    for (const attr of attrs) if (x.attr(attr) !== undefined && isAbsolute(x.attr(attr))) x.attr(attr, rewriteUrl(x.attr(attr), base, c));
     for (const attr of ['style','srcset','imagesrcset']) if (x.attr(attr) !== undefined) x.attr(attr, rewriteText(x.attr(attr), c));
     // Relative srcset URLs already resolve on the mirrored route; absolute source origins are remapped above.
     if (x.attr('content') && /^(og:|twitter:)/i.test(x.attr('property') || x.attr('name') || '')) x.attr('content', rewriteText(x.attr('content'), c));
     // Subresource integrity no longer matches scripts/styles whose source-origin strings can change.
-    if (x.attr('integrity') && ['script','link'].includes(el.tagName) && (x.attr('src') || x.attr('href') || '').startsWith(c.publicOrigin + '/')) x.removeAttr('integrity');
+    const ref = x.attr('src') || x.attr('href') || '';
+    if (x.attr('integrity') && ['script','link'].includes(el.tagName) && (!isAbsolute(ref) || ref.startsWith(c.publicOrigin + '/'))) x.removeAttr('integrity');
   });
+  // Google OAuth cannot complete on the mirror domain (Supabase redirect allowlist), so hide that option.
+  $('head').append('<style data-mirror-hide-google>button:has(> svg > path[fill="#4285F4"]),button:has(> svg > path[fill="#4285F4"]) + div:has(> span){display:none!important}</style>');
   $('meta[http-equiv]').each((_,el)=>{ if(/^refresh$/i.test($(el).attr('http-equiv')||'')) $(el).attr('content',rewriteText($(el).attr('content')||'',c)); });
   $('style').each((_, el) => { $(el).text(rewriteText($(el).text(), c)); });
   const flightHandled = rewriteInlineFlight($, c);

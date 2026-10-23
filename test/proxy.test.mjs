@@ -30,7 +30,7 @@ test('real HTTP proxy: SEO, gzip, cache isolation, redirects, binary, errors and
       res.setHeader('Vary','RSC, Next-Router-State-Tree, Accept-Language');
       res.setHeader('Link',`<${source}/page>; rel="canonical"`);
       if(req.headers.cookie)res.setHeader('Set-Cookie','secret=1; HttpOnly');
-      return res.end(`<head><link rel="canonical" href="${source}/page"></head><h1>Visit ${hits}</h1><a href="/other">Other</a>`);
+      return res.end(`<head><link rel="canonical" href="${source}/page"></head><h1>Visit ${hits}</h1><a href="${source}/other">Other</a>`);
     }
     if(u.pathname==='/echo'){let b='';req.on('data',x=>b+=x);req.on('end',()=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify({body:b,origin:req.headers.origin}));});return;}
     res.writeHead(404);res.end('missing');

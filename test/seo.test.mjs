@@ -29,12 +29,19 @@ test('single canonical, OG URL, verification, links, schema and HTML escaping',(
   const $=cheerio.load(result.html);
   assert.equal($('link[rel=canonical]').length,1);
   assert.equal($('link[rel=canonical]').attr('href'),'https://mirror.example/products/widget?page=2');
-  assert.equal($('a').first().attr('href'),'https://mirror.example/products/other');
+  assert.equal($('a').first().attr('href'),'/products/other');
   assert.equal($('a').last().attr('href'),'https://external.example/');
   assert.equal($('meta[name=google-site-verification]').attr('content'),'mine');
   assert.equal(JSON.parse($('script[type="application/ld+json"]').text()).url,'https://mirror.example/products/widget');
   assert.equal($('[data-mirror-editorial]').text(),'My <review> & notes');
   assert.equal($('[data-mirror-editorial] review').length,0);
+});
+test('relative script src stays byte-identical so Turbopack can register chunks',()=>{
+  const html='<head><script src="/_next/static/chunks/a.js" integrity="sha384-x" async></script><script src="https://source.example/_next/b.js"></script></head><body></body>';
+  const $=cheerio.load(transformHtml(html,page,200,c).html);
+  assert.equal($('script[src]').first().attr('src'),'/_next/static/chunks/a.js');
+  assert.equal($('script[src]').first().attr('integrity'),undefined);
+  assert.equal($('script[src]').last().attr('src'),'https://mirror.example/_next/b.js');
 });
 test('404 and source noindex are preserved, canonical omitted',()=>{
   for(const [status,html] of [[404,'<h1>Not found</h1>'],[200,'<meta name="robots" content="none"><h1>Private</h1>']]){
