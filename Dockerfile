@@ -1,5 +1,7 @@
 FROM node:24-bookworm-slim
 ENV NODE_ENV=production
+# Without this, the Railway-provided domain becomes canonical and custom domains 308 to it.
+ENV PUBLIC_ORIGIN=https://codehype.net
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clean --force
